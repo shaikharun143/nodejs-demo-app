@@ -159,7 +159,7 @@ Production-style deployment workflow
 
 ![image alt](https://github.com/shaikharun143/nodejs-demo-app/blob/a9dfdff0e4d986f76b4921007e94f2f6b827f7d8/Screenshot%202026-05-29%20222008.png?raw=true)
 ![image alt](https://github.com/shaikharun143/nodejs-demo-app/blob/bb832bee6e7adfce80569436ced49824967cc4f7/Screenshot%202026-05-29%20225939.png?raw=true)
-![image alt]( ?raw=true)
+![image alt](https://github.com/shaikharun143/nodejs-demo-app/blob/c05b8f41ef9e4edd606d46d71c5aff18c8b0885a/Screenshot%202026-05-29%20231148.png?raw=true)
 ```
 
 
