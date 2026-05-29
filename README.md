@@ -111,7 +111,7 @@ npm start
 App runs at:
 
 
-<img width="1372" height="690" alt="cf9e4a67-102f-4109-a4f5-cb50d51a67de" src="https://github.com/user-attachments/assets/0ceb512d-7955-4c4b-aca4-69fbc1f69dfa" />
+
 
 http://localhost:3000
 🔄 CI/CD Execution Flow
@@ -156,7 +156,7 @@ Versioned deployments using commit SHA
 Production-style deployment workflow
 🎯 Outcome
 
-<img width="1367" height="611" alt="9a982ee3-e90c-4f1f-a0de-772b49957bcb" src="https://github.com/user-attachments/assets/406315cc-c2ad-4902-ab6b-3966884a8b68" />
+
 
 
 This project demonstrates a real-world DevOps workflow where:
