@@ -155,8 +155,10 @@ Secure secrets handling
 Versioned deployments using commit SHA
 Production-style deployment workflow
 🎯 Outcome
+```
 
-![image alt](https://github.com/shaikharun143/nodejs-demo-app/blob/a9dfdff0e4d986f76b4921007e94f2f6b827f7d8/Screenshot%202026-05-29%20222008.png)
+![image alt](https://github.com/shaikharun143/nodejs-demo-app/blob/a9dfdff0e4d986f76b4921007e94f2f6b827f7d8/Screenshot%202026-05-29%20222008.png?raw=true)
+```
 
 
 This project demonstrates a real-world DevOps workflow where:
