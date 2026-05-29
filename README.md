@@ -1,52 +1,167 @@
-Automating Code Deployment with a CI/CD Pipeline
-GitHub Actions · Node.js · Docker · DockerHub — Step-by-Step Guide
-Understanding the goal
-You're building a pipeline that, every time you push code to main , automatically runs your tests, builds a Docker image of your app, and
-pushes that image to DockerHub. GitHub Actions is the engine that watches your repository and runs these steps on a fresh virtual
-machine in the cloud — so you never run docker build or docker push manually again.
-Step 1 — Prepare the project locally
-Unzip the sample project (or create the files yourself). Then generate the lock file and confirm the tests pass before touching GitHub:
+# 🚀 CI/CD Pipeline: Automated Node.js Deployment with GitHub Actions & Docker
+
+![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-blue?style=for-the-badge)
+![Node.js](https://img.shields.io/badge/Node.js-20.x-green?style=for-the-badge)
+![Docker](https://img.shields.io/badge/Docker-Containerized-blue?style=for-the-badge)
+![Build Status](https://img.shields.io/badge/Build-Passing-success?style=for-the-badge)
+
+---
+
+## 📌 Overview
+
+This project demonstrates a **production-style CI/CD pipeline** using:
+
+- **GitHub Actions** for automation
+- **Node.js** for application runtime
+- **Docker** for containerization
+- **DockerHub** for image registry
+
+### 🎯 Objective
+
+Automate the complete software delivery pipeline so that:
+
+> Every push to the `main` branch automatically triggers testing, builds a Docker image, and publishes it to DockerHub.
+
+No manual deployment steps required.
+
+---
+
+## 🏗️ Architecture
+
+
+Developer → GitHub Push → GitHub Actions CI/CD Pipeline
+↓
+Run Tests (Node.js)
+↓
+Build Docker Image
+↓
+Push Image to DockerHub
+↓
+Deployable Artifact Ready
+
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer        | Technology |
+|--------------|------------|
+| Backend      | Node.js    |
+| CI/CD        | GitHub Actions |
+| Container    | Docker     |
+| Registry     | DockerHub  |
+
+---
+
+## 📂 Project Structure
+
+```
+
+nodejs-demo-app/
+├── .github/workflows/
+│   └── main.yml
+├── src/
+├── tests/
+├── Dockerfile
+├── package.json
+├── package-lock.json
+└── README.md
+
+⚙️ CI/CD Pipeline Workflow
+
+The pipeline is divided into two automated stages:
+
+🧪 1. Build & Test Stage
+Checkout repository code
+Setup Node.js environment (v20)
+Install dependencies using npm ci
+Execute unit tests using npm test
+
+✔ Ensures only validated code proceeds to deployment
+
+🐳 2. Docker Build & Push Stage
+
+Triggered only if tests pass:
+
+Authenticate with DockerHub
+Build Docker image from Dockerfile
+Push image with two tags:
+latest
+<commit-SHA> (version traceability)
+
+🔐 Ensures reproducible and version-controlled deployments
+
+🔐 Security Implementation
+DockerHub authentication handled using GitHub Secrets
+No credentials stored in codebase
+Secrets used:
+Secret Name	Description
+DOCKERHUB_USERNAME	DockerHub username
+DOCKERHUB_TOKEN	Access token (Read/Write)
+🚀 Setup Instructions
+1️⃣ Clone Repository
+git clone https://github.com/<your-username>/nodejs-demo-app.git
 cd nodejs-demo-app
-npm install # creates package-lock.json
-npm test # should show passing tests
-npm start # open http://localhost:3000 to see it run
-Important: the pipeline uses npm ci , which requires a committed package-lock.json . Running npm install once locally generates it. Skip
-this and the pipeline fails at the install step.
-Step 2 — Create the GitHub repository
-On GitHub, click New repository, name it nodejs-demo-app , and leave it empty (no README, since the project already has one). Then
-from your project folder:
-git init
-git add .
-git commit -m "Initial commit: Node app + CI/CD pipeline"
-git branch -M main
-git remote add origin https://github.com/<your-username>/nodejs-demo-app.git
-git push -u origin main
-The moment this push lands, GitHub detects .github/workflows/main.yml and the pipeline starts running.
-Step 3 — Set up DockerHub and an access token
-Create a free account at hub.docker.com. Then go to Account Settings → Personal access tokens → Generate new token. Give it
-Read/Write permissions and copy the token immediately (you cannot view it again). Use a token rather than your password because it is
-safer and revocable.
-Step 4 — Add secrets to GitHub
-In your repo, go to Settings → Secrets and variables → Actions → New repository secret and add two secrets:
-DOCKERHUB_USERNAME — your DockerHub username
-DOCKERHUB_TOKEN — the access token from Step 3
-The workflow references these as ${{ secrets.DOCKERHUB_USERNAME }} , so the names must match exactly. Secrets are encrypted and
-never printed in logs.
-Step 5 — Understand what the workflow does
-The main.yml file defines two jobs. The first, build-and-test , checks out your code, installs Node 20, installs dependencies, and runs npm
-test . The second, docker-build-push , has needs: build-and-test , so it only runs if the tests pass — the core safety guarantee of CI/CD.
-It logs into DockerHub, builds the image from your Dockerfile , and pushes two tags: latest and one tagged with the exact commit SHA,
-so you can always trace which code produced which image. The if: condition ensures images are pushed only on real pushes to main ,
-not on pull requests.
-Step 6 — Trigger and verify
-Any push to main (including your Step 2 push) triggers the run. Open the Actions tab in your repo to watch it live — you'll see the two
-jobs execute in sequence with green checkmarks. Then check DockerHub: a new nodejs-demo-app image should appear. To prove it works
-end-to-end, pull and run the published image anywhere:
+2️⃣ Install Dependencies
+npm install
+npm test
+3️⃣ Run Locally
+npm start
+
+App runs at:
+
+http://localhost:3000
+🔄 CI/CD Execution Flow
+Trigger Event
+
+Any push to:
+
+main branch
+Execution Steps
+1. GitHub detects push
+2. Workflow starts
+3. Tests executed
+4. Docker image built
+5. Image pushed to DockerHub
+🐳 Run Docker Image
 docker run -p 3000:3000 <your-username>/nodejs-demo-app:latest
-Step 7 — Demonstrate the automation
-To show the loop closing, make a small change (for example, edit the greeting text in server.js ), commit, and push. Watch the Actions
-tab re-run automatically and a fresh image appear on DockerHub. That is the test → build → push automation working with no manual
-steps — exactly what the task asks you to demonstrate.
-What to submit as deliverables
-Your GitHub repo link is the main deliverable. Strengthen it with: a screenshot of a green pipeline run from the Actions tab, a screenshot of
-your image on DockerHub, and the README.md explaining the setup.
+📸 Proof of Execution (Screenshots)
+
+Include the following in your submission:
+
+✅ GitHub Actions successful pipeline (green check)
+🐳 DockerHub repository with pushed image
+📦 Running container output in browser
+🔁 CI/CD Demonstration
+
+To demonstrate automation:
+
+# Make a code change
+git add .
+git commit -m "Update application response"
+git push origin main
+Result:
+GitHub Actions re-triggers automatically
+Tests re-run
+New Docker image is built and pushed
+📈 Key DevOps Learnings
+CI/CD pipeline design
+GitHub Actions workflow automation
+Docker image lifecycle management
+Secure secrets handling
+Versioned deployments using commit SHA
+Production-style deployment workflow
+🎯 Outcome
+
+This project demonstrates a real-world DevOps workflow where:
+
+✔ Code is tested automatically
+✔ Builds are containerized
+✔ Images are versioned and stored
+✔ Deployment is fully automated
+
+👨‍💻 Author
+
+Harun Yahya Shaik
+DevOps & Cloud Enthusiast
+Skills: Node.js | Docker | GitHub Actions | AWS | CI/CDME.md explaining the setup.
